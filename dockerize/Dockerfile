@@ -3,7 +3,10 @@ FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
 # Install Shinken, Nagios plugins, apache2 and supervisord
-RUN         apt-get update && apt-get install -y python-pip \
+RUN         apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 && \
+                echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list && \
+                apt-get update && \
+                apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
                 nagios-plugins \
@@ -14,7 +17,10 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-dev \
                 python-cairo \
                 libssl-dev \
-                ntp
+                ntp \
+                adduser \
+                mongodb-10gen && \
+                mkdir -p /mongo
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
