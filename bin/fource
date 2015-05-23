@@ -19,6 +19,7 @@ __requires__ = ['fource']
 
 import os
 import sys
+import time
 from optparse import OptionParser
 # TODO
 # import logging
@@ -98,20 +99,20 @@ def parse_options():
 
 
 def run():
-    arguments = parse_options()
-    exit_status, message = controller.execute(arguments)
-    if exit_status:
-        print 'OK - %s' % message
-        sys.exit(0)
-    else:
-        print 'CRITICAL - %s' % message
-        sys.exit(2)
-    # try:
-    #     arguments = parse_options()
-    #     controller.execute(arguments)
-    # except Exception as e:
-    #     print e.message
-    #     sys.exit(1)
+    try:
+        arguments = parse_options()
+        start_timestamp = time.time()
+        exit_status, message = controller.execute(arguments)
+        time_taken = int(round((time.time() - start_timestamp) * 1000.0))
+        if exit_status:
+            print 'OK - %s | delay=%sms' % (message, time_taken)
+            sys.exit(0)
+        else:
+            print 'CRITICAL - | delay=%sms' % (message, time_taken)
+            sys.exit(2)
+    except Exception as e:
+        print 'Exception: %s' % e.message
+        sys.exit(1)
 
 
 #### EXECUTE ###################################################################
