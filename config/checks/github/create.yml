@@ -5,7 +5,7 @@
     url: https://api.github.com/orgs/fource/repos
     method: POST
     headers:
-      Authorization: token 02f23124b0f2e659087c61783fdf8f10cdc52dff
+      Authorization: token d78648e74acb7ee589c16c8e438ab68fb2b3a47f
     data:
       name: hello-world-999
 
