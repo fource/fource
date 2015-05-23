@@ -52,29 +52,56 @@ class HttpClass(object):
 
     def getRequest(self):
         if self.req_auth is None:
-            r = requests.get(self.req_url,headers=self.req_headers,params=self.req_data)
+            resp = requests.get(self.req_url,headers=self.req_headers,params=self.req_data)
         else:
-            r = requests.get(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
-        self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
+            resp = requests.get(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status':resp.status_code,
+            'request_headers':resp.request.headers,
+            'url':resp.url,
+            'response_headers':resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
 
     def postRequest(self):
         if self.req_auth is None:
-            r = requests.post(self.req_url,headers=self.req_headers,json=self.req_data)
+            resp = requests.post(self.req_url,headers=self.req_headers,json=self.req_data)
         else:
-            r = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
-        self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
-        print self.result
+            resp = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status': resp.status_code,
+            'request_headers': resp.request.headers,
+            'url': resp.url,
+            'response_headers': resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
 
     def putRequest(self):
         if self.req_auth is None:
-            r = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
+            resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
         else:
-            r = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
-        self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
+            resp = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status': resp.status_code,
+            'request_headers': resp.request.headers,
+            'url': resp.url,
+            'response_headers': resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
 
     def delRequest(self):
         if self.req_auth is None:
-            r = requests.delete(self.req_url,headers=self.req_headers)
+            resp = requests.delete(self.req_url,headers=self.req_headers)
         else:
-            r = requests.delete(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
-        self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
+            resp = requests.delete(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status': resp.status_code,
+            'request_headers': resp.request.headers,
+            'url': resp.url,
+            'response_headers': resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
