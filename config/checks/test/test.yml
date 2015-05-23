@@ -1,0 +1,12 @@
+---
+- name: Testing github
+  protcol: http
+  parameters:
+    url: https://api.github.com/users/defunkt
+    method: GET
+
+- name: RTFM
+  protcol: http
+  parameters:
+    url: https://api.github.com/users/defunkt
+    method: GET
