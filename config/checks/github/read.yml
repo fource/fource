@@ -2,8 +2,8 @@
 - name: Read API 
   protocol: http
   parameters:
-    url: https://api.github.com/orgs/fource/repos
+    url: https://api.github.com/repos/fource/testing-read
     method: GET
-    header:
+    headers:
       Authorization: token 02f23124b0f2e659087c61783fdf8f10cdc52dff
       
