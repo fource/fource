@@ -45,7 +45,6 @@ def execute(arguments):
         connection = ConnClass(task.get('parameters'))
         result = connection.execute()
         validate = connection.validator(result, task.get('expected_result'))
-        print validate
         print '#'*80
         print result
         print '#'*80
@@ -55,4 +54,5 @@ def execute(arguments):
         # print protocol
         print str(arguments)
         storage.save(task_id, result)
-    return (0, "OK - Tested successfully")
+    # return (0, "OK - Tested successfully")
+    return validate
