@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 class HttpClass(object):
     """
@@ -24,20 +24,12 @@ class HttpClass(object):
         self.req_method = http_params.get('method')
         if self.req_method is None:
             self.req_method = 'get'
-        self.req_headers = http_params.get('headers')
-        if self.req_headers is None:
-            self.req_headers = {}
+        self.req_headers = {'Content-Type':'application/json'}
+        if http_params.get('headers') is not None:
+            self.req_headers.update(http_params.get('headers'))
         self.req_auth = http_params.get('auth')
         self.req_data = http_params.get('data')
-        self.requestDataTypeGenerator(http_params.get('data_type'))
         self.result = None
-
-    def requestDataTypeGenerator(self, datatype):
-        data_to_accept = {'json':'application/json','xml':'application/xml'}
-        if data_to_accept.get(datatype) is None:
-            self.req_headers['Content-Type'] = data_to_accept.get('json')
-        else:
-            self.req_headers['Content-Type'] = data_to_accept.get(datatype)
 
     def execute(self):
         if self.req_method.lower() == 'get':
@@ -56,7 +48,7 @@ class HttpClass(object):
         else:
             resp = requests.get(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {
-            'status':resp.status_code,
+            'status_code':resp.status_code,
             'request_headers':resp.request.headers,
             'url':resp.url,
             'response_headers':resp.headers,
@@ -70,7 +62,7 @@ class HttpClass(object):
         else:
             resp = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {
-            'status': resp.status_code,
+            'status_code': resp.status_code,
             'request_headers': resp.request.headers,
             'url': resp.url,
             'response_headers': resp.headers,
@@ -84,7 +76,7 @@ class HttpClass(object):
         else:
             resp = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {
-            'status': resp.status_code,
+            'status_code': resp.status_code,
             'request_headers': resp.request.headers,
             'url': resp.url,
             'response_headers': resp.headers,
@@ -98,10 +90,9 @@ class HttpClass(object):
         else:
             resp = requests.delete(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {
-            'status': resp.status_code,
+            'status_code': resp.status_code,
             'request_headers': resp.request.headers,
             'url': resp.url,
             'response_headers': resp.headers,
             'response': resp.text,
-            'response_json': resp.json(),
         }
