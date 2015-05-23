@@ -123,7 +123,6 @@ class HttpClass(object):
     def patchRequest(self):
         patchdata = self.req_data
         self.req_data = json.dumps(patchdata)
-        import pdb; pdb.set_trace()
         if self.req_auth is None:
             resp = requests.patch(self.req_url,headers=self.req_headers,data=self.req_data)
         else:
