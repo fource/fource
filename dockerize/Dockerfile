@@ -3,7 +3,10 @@ FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
 # Install Shinken, Nagios plugins, apache2 and supervisord
-RUN         apt-get update && apt-get install -y python-pip \
+RUN         apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10 && \
+                echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list && \
+                apt-get update && \
+                apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
                 nagios-plugins \
@@ -14,7 +17,10 @@ RUN         apt-get update && apt-get install -y python-pip \
                 python-dev \
                 python-cairo \
                 libssl-dev \
-                ntp
+                ntp \
+                adduser \
+                mongodb-10gen && \
+                mkdir -p /mongo
 RUN         useradd --create-home shinken && \
                 pip install shinken && \
                 update-rc.d -f apache2 remove && \
@@ -79,7 +85,7 @@ ADD         shinken/webui.cfg /etc/shinken/modules/webui.cfg
 ADD         shinken/livestatus.cfg /etc/shinken/modules/livestatus.cfg
 ADD         shinken/graphite.cfg /etc/shinken/modules/graphite.cfg
 ADD         shinken/ui-graphite.cfg /etc/shinken/modules/ui-graphite.cfg
-RUN         mkdir -p /etc/shinken/custom_configs /usr/local/custom_plugins && \
+RUN         mkdir -p /etc/shinken/custom_configs /etc/fource/config && \
                 ln -sf /etc/shinken/custom_configs/htpasswd.users /etc/shinken/htpasswd.users && \
                 rm -f /etc/thruk/htpasswd && \
                 ln -sf /etc/shinken/htpasswd.users /etc/thruk/htpasswd && \
@@ -101,7 +107,7 @@ RUN         cd /usr/lib/nagios/plugins/ && \
                 chmod u+s check_apt restart_service check_ping check_icmp check_fping apt_update
 
 # Define mountable directories
-VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
+VOLUME      ["/etc/shinken/custom_configs", "/etc/fource/config"]
 
 # configure supervisor
 ADD         supervisor/conf.d/* /etc/supervisor/conf.d/

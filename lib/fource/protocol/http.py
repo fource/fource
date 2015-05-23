@@ -1,4 +1,4 @@
-import requests
+import requests, json
 
 class HttpClass(object):
     """
@@ -40,6 +40,8 @@ class HttpClass(object):
             self.putRequest()
         if self.req_method.lower() == 'delete':
             self.delRequest()
+        if self.req_method.lower() == 'patch':
+            self.patchRequest()
         return self.result
 
     def getRequest(self):
@@ -60,7 +62,7 @@ class HttpClass(object):
         if self.req_auth is None:
             resp = requests.post(self.req_url,headers=self.req_headers,json=self.req_data)
         else:
-            resp = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+            resp = requests.post(self.req_url,headers=self.req_headers,json=self.req_data,auth=self.req_auth)
         self.result = {
             'status_code': resp.status_code,
             'request_headers': resp.request.headers,
@@ -82,8 +84,13 @@ class HttpClass(object):
         else:
             print "Alright.Everything is OK
         """
+<<<<<<< HEAD
         print validation_dic
         failed_cases = [] 
+=======
+
+        failed_cases = []
+>>>>>>> eb72399920ab01b8de052d71373cd27f3cc39d84
         for property in validation_dic.keys():
             if property == 'status_code':
                 if not str(response['status_code']).startswith(str(validation_dic[property])[0]):
@@ -94,21 +101,42 @@ class HttpClass(object):
             else:
                 if validation_dic[property] != response['response_headers'][property]:
                     failed_cases.append(property)
-        
+
         if not failed_cases:
-            return (True ,'API testing is successful')
+            return (True, 'Test successful')
         else:
+<<<<<<< HEAD
             fail_message = (("Following validations: \n" + "%s\n"*len(failed_cases))%tuple(failed_cases)) + " \nare failed!" 
             return (False,fail_message)
 
 
 
+=======
+            fail_message = "Test failed. Found errors: %s" % ', '.join(failed_cases)
+            return (False, fail_message)
+>>>>>>> eb72399920ab01b8de052d71373cd27f3cc39d84
 
     def putRequest(self):
         if self.req_auth is None:
             resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
         else:
-            resp = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+            resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status_code': resp.status_code,
+            'request_headers': resp.request.headers,
+            'url': resp.url,
+            'response_headers': resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
+
+    def patchRequest(self):
+        patchdata = self.req_data
+        self.req_data = json.dumps(patchdata)
+        if self.req_auth is None:
+            resp = requests.patch(self.req_url,headers=self.req_headers,data=self.req_data)
+        else:
+            resp = requests.patch(self.req_url,headers=self.req_headers,data=self.req_data,auth=self.req_auth)
         self.result = {
             'status_code': resp.status_code,
             'request_headers': resp.request.headers,
