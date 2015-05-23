@@ -35,9 +35,9 @@ class HttpClass(object):
     def requestDataTypeGenerator(self, datatype):
         data_to_accept = {'json':'application/json','xml':'application/xml'}
         if data_to_accept.get(datatype) is None:
-            self.req_headers['Accept'] = data_to_accept.get('json')
+            self.req_headers['Content-Type'] = data_to_accept.get('json')
         else:
-            self.req_headers['Accept'] = data_to_accept.get(datatype)
+            self.req_headers['Content-Type'] = data_to_accept.get(datatype)
 
     def execute(self):
         if self.req_method.lower() == 'get':
