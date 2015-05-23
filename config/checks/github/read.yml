@@ -1,6 +1,6 @@
 ---
 - name: Read API 
-  protcol: http
+  protocol: http
   parameters:
     url: https://api.github.com/orgs/fource/repos
     method: GET
