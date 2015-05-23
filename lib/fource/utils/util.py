@@ -2,15 +2,15 @@ import string
 import random
 
 
-def random_string(size=100, chars=string.letters):
+def random_string(size=10, chars=string.letters):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
-def random_number(size=100, chars=string.digits):
+def random_number(size=10, chars=string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
-def random_identifier(size=100, chars=string.ascii_uppercase + string.digits):
+def random_identifier(size=10, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
