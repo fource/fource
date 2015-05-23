@@ -44,6 +44,9 @@ RUN         pip install Twisted==11.1.0 && \
                 pip install graphite-web==0.9.12 && \
                 pip install gunicorn==19.1.1
 
+# Install Fource
+RUN         pip install fource
+
 # Install and configure thruk
 RUN         gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \
                 gpg --armor --export F8C1CA08A57B9ED7 | apt-key add - && \
