@@ -1,4 +1,4 @@
-import requests
+import requests, json
 
 class HttpClass(object):
     """
@@ -40,6 +40,8 @@ class HttpClass(object):
             self.putRequest()
         if self.req_method.lower() == 'delete':
             self.delRequest()
+        if self.req_method.lower() == 'patch':
+            self.patchRequest()
         return self.result
 
     def getRequest(self):
@@ -60,7 +62,7 @@ class HttpClass(object):
         if self.req_auth is None:
             resp = requests.post(self.req_url,headers=self.req_headers,json=self.req_data)
         else:
-            resp = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+            resp = requests.post(self.req_url,headers=self.req_headers,json=self.req_data,auth=self.req_auth)
         self.result = {
             'status_code': resp.status_code,
             'request_headers': resp.request.headers,
@@ -108,7 +110,24 @@ class HttpClass(object):
         if self.req_auth is None:
             resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
         else:
-            resp = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+            resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data,auth=self.req_auth)
+        self.result = {
+            'status_code': resp.status_code,
+            'request_headers': resp.request.headers,
+            'url': resp.url,
+            'response_headers': resp.headers,
+            'response': resp.text,
+            'response_json': resp.json(),
+        }
+
+    def patchRequest(self):
+        patchdata = self.req_data
+        self.req_data = json.dumps(patchdata)
+        import pdb; pdb.set_trace()
+        if self.req_auth is None:
+            resp = requests.patch(self.req_url,headers=self.req_headers,data=self.req_data)
+        else:
+            resp = requests.patch(self.req_url,headers=self.req_headers,data=self.req_data,auth=self.req_auth)
         self.result = {
             'status_code': resp.status_code,
             'request_headers': resp.request.headers,
