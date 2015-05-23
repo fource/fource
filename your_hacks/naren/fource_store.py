@@ -21,9 +21,9 @@ class FourceStore(object):
 		#
 		self.client = MongoClient(host,port)
 		self.db = self.client.fource_db
-		self.records = slef.db.fource_records
+		self.records = self.db.fource_records
 
-	def push_key(fource_key,value):
+	def push_key(self,fource_key,value):
 		try:
 			insertion_id = self.records.insert({'_id':fource_key , 'data': json.dumps(value)})
 			logger.info('successfully inserted key %s'%fource_key)
@@ -31,12 +31,12 @@ class FourceStore(object):
 			logger.error('duplicate key.Insertion not allowed')
 		return insertion_id
 
-	def pop_key(fource_key):
+	def pop_key(self,fource_key):
 		self.records.remove({'_id':fource_key})
 		logger.info('deleted %s successfully'%fource_key)
 		return fource_key
 
-	def peek_key(fource_key):
+	def peek_key(self,fource_key):
 		results = json.laods(self.records.find_one({'_id':fource_key}))
 		return results
 
