@@ -44,7 +44,7 @@ def execute(arguments):
         ConnClass = PROTOCOL_SELECT.get(protocol_name)
         connection = ConnClass(task.get('parameters'))
         result = connection.execute()
-        validate = connection.validate(result, task.get('expected_result'))
+        validate = connection.validator(result, task.get('expected_result'))
         print validate
         print '#'*80
         print result
