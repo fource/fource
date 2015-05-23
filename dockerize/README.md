@@ -1,7 +1,7 @@
 Fource
 ======
 
-It contains fource cli, shinken, thruk, graphite and Apache.
+It contains fource cli, shinken, thruk, graphite, mongodb and apache.
 
 How to run:
 
