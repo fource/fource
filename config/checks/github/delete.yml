@@ -1,0 +1,19 @@
+---
+- name: Create API
+  protocol: http
+  parameters:
+    url: https://api.github.com/orgs/fource/repos
+    method: POST
+    headers:
+      Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
+    data:
+      name: "test-{{ fource_random_string }}"
+
+
+- name: Delete API
+  protocol: http
+  parameters:
+    url: https://api.github.com/repos/fource/"{{ response_json.name }}"
+    method: DELETE
+    headers:
+      Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
