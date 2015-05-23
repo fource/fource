@@ -7,7 +7,6 @@ class Parser(object):
     """
     def __init__(self, path):
         self.path = path
-        print path
         self.check_id =  path.split('/')[-2] + '-' + path.split('/')[-1].split('.')[0]
 
     def parse(self):

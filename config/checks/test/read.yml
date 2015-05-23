@@ -5,8 +5,8 @@
     url: https://api.github.com/users/defunkt
     method: GET
 
-- name: RTFM
-  protocol: http
-  parameters:
-    url: https://api.github.com/users/defunkt
-    method: GET
+# - name: RTFM
+#   protocol: http
+#   parameters:
+#     url: https://api.github.com/users/defunkt
+#     method: GET
