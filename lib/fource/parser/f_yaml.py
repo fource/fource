@@ -14,7 +14,7 @@ class Parser(object):
         # Add validation
         config_list = yaml.load(infile)
         for config in config_list:
-            config['check_id'] = self.check_id
+            config['id'] = self.check_id
         return config_list
 
 
