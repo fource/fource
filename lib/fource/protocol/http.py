@@ -1,4 +1,4 @@
-import requests
+import requests, json
 
 class HttpClass(object):
     """
@@ -59,21 +59,22 @@ class HttpClass(object):
 
     def postRequest(self):
         if self.req_auth is None:
-            r = requests.post(self.req_url,headers=self.req_headers,params=self.req_data)
+            r = requests.post(self.req_url,headers=self.req_headers,json=self.req_data)
         else:
             r = requests.post(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
+        print self.result
 
     def putRequest(self):
         if self.req_auth is None:
-            r = requests.put(self.req_url,headers=self.req_headers,params=self.req_data)
+            r = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
         else:
             r = requests.put(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
 
     def delRequest(self):
         if self.req_auth is None:
-            r = requests.delete(self.req_url,headers=self.req_headers,params=self.req_data)
+            r = requests.delete(self.req_url,headers=self.req_headers)
         else:
             r = requests.delete(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
         self.result = {'status':r.status_code, 'request_headers':r.request.headers, 'url':r.url, 'response_headers':r.headers, 'response': r.text}
