@@ -5,6 +5,7 @@ import fource.parser.f_yaml
 import fource.protocol.http
 import fource.storage.mongo
 import fource.template_engine.f_jinja2
+from fource.utils.util import get_random_dict
 
 
 PARSER_SELECT = {
@@ -37,6 +38,7 @@ def execute(arguments):
     for task in task_list:
         task_id = task.get('id')
         last_result = storage.get(task_id)
+        last_result.update(get_random_dict())
         task = template_engine.render_from_object(task, **last_result)
         protocol_name = task.get('protocol', 'http')
         ConnClass = PROTOCOL_SELECT.get(protocol_name)

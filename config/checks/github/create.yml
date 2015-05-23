@@ -1,5 +1,5 @@
 ---
-- name: Create API 
+- name: Create API
   protocol: http
   parameters:
     url: https://api.github.com/orgs/fource/repos
@@ -7,6 +7,5 @@
     headers:
       Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
     data:
-      name: hello-world-999
-
+      name: "test-{{ fource_random_string | truncate(10) }}"
 
