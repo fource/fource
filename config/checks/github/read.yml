@@ -6,8 +6,6 @@
     method: GET
     headers:
       Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
-
-
-#  full_name: "{{ response_json.full_name }}"
-#  name: "{{ response_json.name }}"
+  expected_result:
+    status_code: 200
 

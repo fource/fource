@@ -44,11 +44,13 @@ def execute(arguments):
         ConnClass = PROTOCOL_SELECT.get(protocol_name)
         connection = ConnClass(task.get('parameters'))
         result = connection.execute()
-        #print '#'*80
+        print '#'*80
         print result
-        #print '#'*80
+        print '#'*80
         storage.save(task_id, result)
-        #print storage.get(task_id)
-        #print '#'*80
-        # print protocol
-    # print str(arguments)
+        print storage.get(task_id)
+        print '#'*80
+        print protocol
+        print str(arguments)
+        storage.save(task_id, result)
+    return (0, "OK - Tested successfully")
