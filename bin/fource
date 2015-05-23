@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+#
+# This file is part of Fource
+#
+# Fource is free software: you can redistribute it and/or modify
+# it under the terms of the The MIT License (MIT).
+#
+# Fource is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the MIT License (MIT)
+# along with Fource.  If not, see <http://opensource.org/licenses/MIT>.
+#
+#### GLOBAL VARIABLES ##########################################################
+
+__requires__ = ['fource']
+
+import os
+import sys
+
+# Augment PYTHONPATH to find Python modules relative to this file path
+# This is so that we can find the modules when running from a local checkout
+# installed as editable with `pip install -e ...` or `python setup.py develop`
+local_module_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..', 'lib')
+)
+sys.path.append(local_module_path)
+
+import fource
+from fource import controller
+
+#### FUNCTIONS AND CLASSES #####################################################
+
+def run():
+    print controller.ping()
+
+
+#### EXECUTE ###################################################################
+
+if __name__ == '__main__':
+    run()
