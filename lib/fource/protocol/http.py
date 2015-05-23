@@ -82,7 +82,7 @@ class HttpClass(object):
         else:
             print "Alright.Everything is OK
         """
-
+        print validation_dic
         failed_cases = [] 
         for property in validation_dic.keys():
             if property == 'status_code':
@@ -98,7 +98,7 @@ class HttpClass(object):
         if not failed_cases:
             return (True ,'API testing is successful')
         else:
-            fail_message = (("Following validations: \n " + "%s\n"*len(failed_cases))%tuple(failed_cases)) + " \nfailed!" 
+            fail_message = (("Following validations: \n" + "%s\n"*len(failed_cases))%tuple(failed_cases)) + " \nare failed!" 
             return (False,fail_message)
 
 

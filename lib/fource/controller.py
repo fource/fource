@@ -7,22 +7,8 @@ import fource.storage.mongo
 import fource.template_engine.f_jinja2
 from fource.utils.util import get_random_dict
 
+from config import *
 
-PARSER_SELECT = {
-    'yml': fource.parser.f_yaml.Parser,
-}
-
-STORAGE_SELECT = {
-    'mongo': fource.storage.mongo.MongoStore,
-}
-
-PROTOCOL_SELECT = {
-    'http': fource.protocol.http.HttpClass,
-}
-
-TEMPLATE_ENGINE = {
-    'jinja2': fource.template_engine.f_jinja2.Jinja2Engine,
-}
 
 
 def execute(arguments):
