@@ -78,6 +78,36 @@ class HttpClass(object):
             'response_json': resp.json(),
         }
 
+    def validator(self,response,validation_dic):
+        """
+        Usage
+        ======
+        response -> result object
+        validation_dic -> obtained from YAML file
+
+        if validator(response,validation_dic):
+            print "There is some wrong with API"
+        else:
+            print "Alright.Everything is OK
+        """
+
+        failed_cases = {}
+        for property in validation_dic.keys():
+            if property == 'status':
+                if not str(response['status']).startswith(str(validation_dic['status'])[0]):
+                    failed_cases[property] = False
+            if property == 'content-type':
+                if response['response_headers']['content-type'] != validation_dic[property]:
+                    failed_cases[property] = False
+            else:
+                if validation_dic[property] != response['response_headers'][property]:
+                    failed_cases[property] = False
+
+        if failed_cases:
+            return failed_cases
+        else:
+            return None
+
     def putRequest(self):
         if self.req_auth is None:
             resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
