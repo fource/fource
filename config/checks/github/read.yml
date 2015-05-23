@@ -6,8 +6,8 @@
     method: GET
     headers:
       Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
-   expected_result:
-     status_code: 200
-     message: ".*testing-read.*"
-     headers:
-       "content-type": "application/json"
+
+
+#  full_name: "{{ response_json.full_name }}"
+#  name: "{{ response_json.name }}"
+
