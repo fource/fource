@@ -83,22 +83,26 @@ class HttpClass(object):
             print "Alright.Everything is OK
         """
 
-        failed_cases = {}
+        failed_cases = [] 
         for property in validation_dic.keys():
             if property == 'status_code':
                 if not str(response['status_code']).startswith(str(validation_dic[property])[0]):
-                    failed_cases[property] = False
+                    failed_cases.append(property)
             elif property == 'content-type':
                 if response['response_headers']['content-type'] != validation_dic[property]:
-                    failed_cases[property] = False
+                    failed_cases.append(property)
             else:
                 if validation_dic[property] != response['response_headers'][property]:
-                    failed_cases[property] = False
-
-        if failed_cases:
-            return failed_cases
+                    failed_cases.append(property)
+        
+        if not failed_cases:
+            return (True ,'API testing is successful')
         else:
-            return None
+            fail_message = (("Following validations: \n " + "%s\n"*len(failed_cases))%tuple(failed_cases)) + " \nfailed!" 
+            return (False,fail_message)
+
+
+
 
     def putRequest(self):
         if self.req_auth is None:
