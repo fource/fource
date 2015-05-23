@@ -99,7 +99,9 @@ def parse_options():
 
 def run():
     arguments = parse_options()
-    controller.execute(arguments)
+    exit_status, message = controller.execute(arguments)
+    print message
+    sys.exit(exit_status)
     # try:
     #     arguments = parse_options()
     #     controller.execute(arguments)
