@@ -85,10 +85,10 @@ class HttpClass(object):
 
         failed_cases = {}
         for property in validation_dic.keys():
-            if property == 'status':
-                if not str(response['status']).startswith(str(validation_dic['status'])[0]):
+            if property == 'status_code':
+                if not str(response['status_code']).startswith(str(validation_dic[property])[0]):
                     failed_cases[property] = False
-            if property == 'content-type':
+            elif property == 'content-type':
                 if response['response_headers']['content-type'] != validation_dic[property]:
                     failed_cases[property] = False
             else:

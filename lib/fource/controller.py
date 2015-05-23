@@ -52,7 +52,7 @@ def execute(arguments):
         storage.save(task_id, result)
         print storage.get(task_id)
         print '#'*80
-        print protocol
+        # print protocol
         print str(arguments)
         storage.save(task_id, result)
     return (0, "OK - Tested successfully")
