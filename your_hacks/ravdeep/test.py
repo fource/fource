@@ -7,7 +7,7 @@ local_module_path = os.path.abspath(
 sys.path.append(local_module_path)
 
 
-from fource.parser.yaml_parser import Parser
+from fource.parser.f_yaml import Parser
 
 def run():
 	file1 = '../../config/checks/test/read.yml'
