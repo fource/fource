@@ -98,12 +98,14 @@ def parse_options():
 
 
 def run():
-    try:
-        arguments = parse_options()
-        controller.execute(arguments)
-    except Exception as e:
-        print e.message
-        sys.exit(1)
+    arguments = parse_options()
+    controller.execute(arguments)
+    # try:
+    #     arguments = parse_options()
+    #     controller.execute(arguments)
+    # except Exception as e:
+    #     print e.message
+    #     sys.exit(1)
 
 
 #### EXECUTE ###################################################################

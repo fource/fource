@@ -38,8 +38,11 @@ class MongoStore(object):
 
 
     def get(self, key):
-        results = self.records.find_one({'_id': key}).get('data')
-        return results
+        results = self.records.find_one({'_id': key})
+        if results and results.get('data'):
+            return results.get('data')
+        else:
+            return {}
 
     def delete(self, key):
         self.records.remove({'_id': key})

@@ -42,11 +42,11 @@ class HttpClass(object):
     def execute(self):
         if self.req_method.lower() == 'get':
             self.getRequest()
-        if self.req_method == 'post':
+        if self.req_method.lower() == 'post':
             self.postRequest()
-        if self.req_method == 'put':
+        if self.req_method.lower() == 'put':
             self.putRequest()
-        if self.req_method == 'delete':
+        if self.req_method.lower() == 'delete':
             self.delRequest()
         return self.result
 
