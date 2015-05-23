@@ -8,4 +8,5 @@
       Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
     data:
       name: "test-{{ 'fource_random_string' }}"
-
+  expected_result:
+    status_code: 201
