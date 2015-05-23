@@ -5,5 +5,5 @@
     url: https://api.github.com/repos/fource/testing-read
     method: GET
     headers:
-      Authorization: token d78648e74acb7ee589c16c8e438ab68fb2b3a47f
+      Authorization: "token {{ ['982022c5e51133ad2', 'd02e3958a6e6997deeb87e5'] | join('') }}"
       
