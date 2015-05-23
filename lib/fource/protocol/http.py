@@ -103,9 +103,6 @@ class HttpClass(object):
             fail_message = (("Following validations: \n " + "%s\n"*len(failed_cases))%tuple(failed_cases)) + " \nfailed!" 
             return (False,fail_message)
 
-
-
-
     def putRequest(self):
         if self.req_auth is None:
             resp = requests.put(self.req_url,headers=self.req_headers,data=self.req_data)
