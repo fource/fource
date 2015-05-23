@@ -22,7 +22,7 @@ PROTOCOL_SELECT = {
 def execute(arguments):
     # import pdb; pdb.set_trace()
     StorageClass = STORAGE_SELECT.get('mongo')
-    storage = StorageClass('kemcho', 27017)
+    storage = StorageClass('localhost', 27017)
     config_file = arguments.get('config')
     extension = config_file.split('.')[-1]
     ParserClass = PARSER_SELECT.get(extension)
