@@ -101,7 +101,10 @@ def run():
     arguments = parse_options()
     exit_status, message = controller.execute(arguments)
     print message
-    sys.exit(exit_status)
+    if exit_status:
+        sys.exit(0)
+    else:
+        sys.exit(2)
     # try:
     #     arguments = parse_options()
     #     controller.execute(arguments)
