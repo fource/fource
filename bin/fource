@@ -19,6 +19,10 @@ __requires__ = ['fource']
 
 import os
 import sys
+from optparse import OptionParser
+# TODO
+# import logging
+# import logging.handlers
 
 # Augment PYTHONPATH to find Python modules relative to this file path
 # This is so that we can find the modules when running from a local checkout
@@ -28,13 +32,78 @@ local_module_path = os.path.abspath(
 )
 sys.path.append(local_module_path)
 
-import fource
 from fource import controller
+from fource import __version__, __author__
+
+
+VERSION = "Version: %s, Author: %s" % (__version__, __author__)
+DESCRIPTION = """
+Fource is a fully automated status board application. It enables organizations
+to create their own status board within minutes.
+
+Features:
+    * Easy configuration of service/API checks in non-programmatic way.
+    * Automated interval based monitoring of every API defined.
+    * Providing a detailed dashboard for operations.
+    * Providing a customer friendly service status board.
+    * Easy extension using modules.
+
+Business Impact:
+    * Helps in meeting SLA's.
+    * Keeping customers updated on status of services.
+    * Providing granular details to operations helping them to take informative decision.
+"""
+OPTIONS = {
+    "c,config": "Path of config file",
+}
+USAGE = "%s [options]"  % os.path.basename(__file__)
+DEFAULTS = {}
+
+# # Logging in syslog (/var/log/syslog)
+# logger = logging.getLogger(__name__)
+# logger.setLevel(logging.DEBUG)
+# handler = logging.handlers.SysLogHandler(address='/dev/log')
+# logger.addHandler(handler)
+
 
 #### FUNCTIONS AND CLASSES #####################################################
+def parse_options():
+    parser = OptionParser(description=DESCRIPTION, usage=USAGE, version=VERSION)
+    for option, description in OPTIONS.items():
+        option = option.strip()
+        if ',' in option:
+            shortopt, longopt = [k.strip() for k in option.split(',')]
+            parser.add_option(
+                '-%s' % shortopt,
+                '--%s' % longopt,
+                dest=longopt,
+                help=description.strip(),
+            )
+        else:
+            parser.add_option(
+                '--%s' % option,
+                dest=option,
+                help=description.strip(),
+            )
+    option_args, _ = parser.parse_args()
+    arguments = {}
+    for option in OPTIONS.keys():
+        option = option.strip()
+        if ',' in option:
+            _, option = [k.strip() for k in option.split(',')]
+        arguments[option] = eval("option_args.%s" % option)
+        if (not arguments[option]) and DEFAULTS.get(option):
+            arguments[option] = DEFAULTS.get(option)
+    return arguments
+
 
 def run():
-    print controller.ping()
+    try:
+        arguments = parse_options()
+        controller.execute(arguments)
+    except Exception as e:
+        print e.message
+        sys.exit(1)
 
 
 #### EXECUTE ###################################################################
