@@ -1,5 +1,6 @@
 from pymongo import MongoClient
-import logger,json
+from pymongo.errors import DuplicateKeyError
+import logging,json
 
 logger = logging.getLogger('fource')
 
@@ -23,8 +24,11 @@ class FourceStore(object):
 		self.records = slef.db.fource_records
 
 	def push_key(fource_key,value):
-		insertion_id = self.records.insert({'_id':fource_key , 'data': json.dumps(value)})
-		logger.info('successfully inserted key %s'%fource_key)
+		try:
+			insertion_id = self.records.insert({'_id':fource_key , 'data': json.dumps(value)})
+			logger.info('successfully inserted key %s'%fource_key)
+		except DuplicateKeyError:
+			logger.error('duplicate key.Insertion not allowed')
 		return insertion_id
 
 	def pop_key(fource_key):
