@@ -49,6 +49,7 @@ setup(name = 'fource',
       classifiers = CLASSIFIERS,
       scripts = [
          'bin/fource',
+         'requirements.txt',
       ],
       data_files = [],
 )
