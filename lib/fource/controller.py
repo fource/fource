@@ -5,6 +5,7 @@ import fource.parser.f_yaml
 import fource.protocol.http
 import fource.storage.mongo
 import fource.template_engine.f_jinja2
+import fource.feedengine.stashboard
 from fource.utils.util import get_random_dict
 
 
@@ -24,12 +25,17 @@ TEMPLATE_ENGINE = {
     'jinja2': fource.template_engine.f_jinja2.Jinja2Engine,
 }
 
+FEEDENGINE_SELECT = {
+    'stashboard': fource.feedengine.stashboard,
+}
+
 
 def execute(arguments):
     # import pdb; pdb.set_trace()
     StorageClass = STORAGE_SELECT.get('mongo')
     storage = StorageClass('localhost', 27017)
     template_engine = TEMPLATE_ENGINE.get('jinja2')()
+    feedengine = FEEDENGINE_SELECT.get('stashboard')
     config_file = arguments.get('config')
     extension = config_file.split('.')[-1]
     ParserClass = PARSER_SELECT.get(extension)
@@ -45,14 +51,6 @@ def execute(arguments):
         connection = ConnClass(task.get('parameters'))
         result = connection.execute()
         validate = connection.validator(result, task.get('expected_result'))
-        print '#'*80
-        print result
-        print '#'*80
         storage.save(task_id, result)
-        print storage.get(task_id)
-        print '#'*80
-        # print protocol
-        print str(arguments)
-        storage.save(task_id, result)
-    # return (0, "OK - Tested successfully")
+        feedengine.update(task_id, validate[0], validate[1])
     return validate

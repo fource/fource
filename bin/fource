@@ -100,10 +100,11 @@ def parse_options():
 def run():
     arguments = parse_options()
     exit_status, message = controller.execute(arguments)
-    print message
     if exit_status:
+        print 'OK - %s' % message
         sys.exit(0)
     else:
+        print 'CRITICAL - %s' % message
         sys.exit(2)
     # try:
     #     arguments = parse_options()

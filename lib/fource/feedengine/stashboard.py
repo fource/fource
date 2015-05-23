@@ -61,11 +61,16 @@ def _add_new_event(service, status, message):
     return response_code, data
 
 
-def update_statusboard(service, status, message):
+def update(service, status, message):
     """
     This funtion calls stashboard API's to post events when required. The
     status update is
     """
+    if isinstance(status, bool):
+        if status:
+            status = 'up'
+        else:
+            status = 'down'
     status = status.lower()
     if status not in STATUS_DETAILS:
         ## TODO: Add logging
