@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 class HttpClass(object):
     """
@@ -24,9 +24,9 @@ class HttpClass(object):
         self.req_method = http_params.get('method')
         if self.req_method is None:
             self.req_method = 'get'
-        self.req_headers = http_params.get('headers')
-        if self.req_headers is None:
-            self.req_headers = {'Content-Type':'application/json'}
+        self.req_headers = {'Content-Type':'application/json'}
+        if http_params.get('headers') is not None:
+            self.req_headers.update(http_params.get('headers'))
         self.req_auth = http_params.get('auth')
         self.req_data = http_params.get('data')
         self.result = None
