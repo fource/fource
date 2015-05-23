@@ -3,7 +3,7 @@
   protocol: http
   parameters:
     url: https://api.github.com/users/defunkt
-    method: GET
+    method: "{{ ['G', 'E', 'T'] | join('') }}"
 
 # - name: RTFM
 #   protocol: http
