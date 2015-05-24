@@ -1,4 +1,5 @@
 import requests, json
+from fource.settings import logger
 
 class HttpClass(object):
     """
@@ -30,6 +31,7 @@ class HttpClass(object):
         self.req_auth = http_params.get('auth')
         self.req_data = http_params.get('data')
         self.result = None
+        logger.info(http_params)
 
     def execute(self):
         if self.req_method.lower() == 'get':
@@ -42,6 +44,7 @@ class HttpClass(object):
             self.delRequest()
         if self.req_method.lower() == 'patch':
             self.patchRequest()
+        logger.info(self.result)
         return self.result
 
     def _extract_json_resp(self, resp):
@@ -78,36 +81,6 @@ class HttpClass(object):
             'response': resp.text,
             'response_json': self._extract_json_resp(resp),
         }
-
-    def validator(self,response,validation_dic):
-        """
-        Usage
-        ======
-        response -> result object
-        validation_dic -> obtained from YAML file
-
-        if validator(response,validation_dic):
-            print "There is some wrong with API"
-        else:
-            print "Alright.Everything is OK
-        """
-        failed_cases = []
-        for property in validation_dic.keys():
-            if property == 'status_code':
-                if not str(response['status_code']).startswith(str(validation_dic[property])[0]):
-                    failed_cases.append(property)
-            elif property == 'content-type':
-                if response['response_headers']['content-type'] != validation_dic[property]:
-                    failed_cases.append(property)
-            else:
-                if validation_dic[property] != response['response_headers'][property]:
-                    failed_cases.append(property)
-
-        if not failed_cases:
-            return (True, 'Test successful')
-        else:
-            fail_message = "Test failed. Found errors: %s" % ', '.join(failed_cases)
-            return (False, fail_message)
 
     def putRequest(self):
         if self.req_auth is None:
@@ -149,3 +122,32 @@ class HttpClass(object):
             'response_headers': resp.headers,
             'response': resp.text,
         }
+
+    def validator(self,response,validation_dic):
+        """
+        Usage
+        ======
+        response -> result object
+        validation_dic -> obtained from YAML file
+
+        if validator(response,validation_dic):
+            print "There is some wrong with API"
+        else:
+            print "Alright.Everything is OK
+        """
+        failed_cases = []
+        for property in validation_dic.keys():
+            if property == 'status_code':
+                if not str(response['status_code']).startswith(str(validation_dic[property])[0]):
+                    failed_cases.append(property)
+            elif property == 'content-type':
+                if response['response_headers']['content-type'] != validation_dic[property]:
+                    failed_cases.append(property)
+            else:
+                if validation_dic[property] != response['response_headers'][property]:
+                    failed_cases.append(property)
+        if not failed_cases:
+            return (True, 'Test successful')
+        else:
+            fail_message = "Test failed. Found errors: %s" % ', '.join(failed_cases)
+            return (False, fail_message)
