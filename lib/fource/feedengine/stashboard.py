@@ -89,8 +89,6 @@ def update(service, status, message):
             if response_code != 200:
                 raise Exception("%s: %s" % (response_code, data))
         except Exception as e:
-            ## TODO: Add logger
-            print e
             continue
         break
     return True
