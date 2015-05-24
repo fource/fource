@@ -54,3 +54,4 @@ with open(GENERATE_FILE, 'w') as f:
         f.write(config['hostconfig'])
         for service_config in config['services']:
             f.write(service_config)
+            f.write('\n\n')
