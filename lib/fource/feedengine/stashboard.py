@@ -61,6 +61,19 @@ def _add_new_event(service, status, message):
     return response_code, data
 
 
+def _add_new_service(service):
+    url = "%s/services" % BASE_URL
+    data = urllib.urlencode({
+        "name": service,
+        "description": service,
+    })
+    client = _get_oauth_client()
+    response, content = client.request(url, "POST", body=data)
+    data = json.loads(content)
+    response_code = int(response['status'])
+    return response_code, data
+
+
 def update(service, status, message):
     """
     This funtion calls stashboard API's to post events when required. The
@@ -81,12 +94,17 @@ def update(service, status, message):
         old_status = data['status']['name'].lower()
         if status == old_status:
             return False
+    elif response_code == 404 and (data.get('message') == 'Service %s not found' % service):
+        _add_new_service(service)
     elif response_code == 404 and status == 'up':
         return False
     for _ in range(3):
         try:
+            import pdb; pdb.set_trace()
             response_code, data = _add_new_event(service, status, message)
-            if response_code != 200:
+            if response_code == 404:
+                _add_new_service(service)
+            elif response_code != 200:
                 raise Exception("%s: %s" % (response_code, data))
         except Exception as e:
             continue
