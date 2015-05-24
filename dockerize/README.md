@@ -8,7 +8,7 @@ How to run:
     $ git clone https://github.com/fource/fource.git
     $ cd fource
     $ python generate_shinken_config.py
-    $ sudo docker run -i -t -v "$(pwd)/dockerize/custom_configs:/etc/shinken/custom_configs" -v "$(pwd)/config:/etc/fource/config" -p 80:80 rohit01/fource
+    $ sudo docker run -d -v "$(pwd)/dockerize/custom_configs:/etc/shinken/custom_configs" -v "$(pwd)/config:/etc/fource/config" -p 80:80 rohit01/fource
 
 Once done, visit these urls (Default credentials - admin/admin):
 
