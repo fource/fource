@@ -111,7 +111,7 @@ def run():
             print 'OK - %s | delay=%sms' % (message, time_taken)
             sys.exit(0)
         else:
-            print 'CRITICAL - | delay=%sms' % (message, time_taken)
+            print 'CRITICAL - %s | delay=%sms' % (message, time_taken)
             sys.exit(2)
     except Exception as e:
         print 'Exception: %s' % e.message

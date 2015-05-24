@@ -1,0 +1,12 @@
+---
+- name: Update API
+  protocol: http
+  parameters:
+    url: "https://api.trello.com/1/cards/5561141cfc3918bfa6c988be"
+    method: PUT
+    data:
+      name: "update-{{ fource_random_string }}"
+      key: d08e823150896b01c8833eee672d0db6
+      token: 11b5dc9bc2b2ca532d1e25b85d3b54b1abbf8143c296df7adb22e2e36dd8970e
+  expected_result:
+    status_code: 200
