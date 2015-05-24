@@ -100,7 +100,6 @@ def update(service, status, message):
         return False
     for _ in range(3):
         try:
-            import pdb; pdb.set_trace()
             response_code, data = _add_new_event(service, status, message)
             if response_code == 404:
                 _add_new_service(service)
