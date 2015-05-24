@@ -1,0 +1,8 @@
+---
+- name: Read API
+  protocol: http
+  parameters:
+    url: https://www.google.com/
+    method: GET
+  expected_result:
+    status_code: 200

@@ -1,0 +1,8 @@
+---
+- name: Create API
+  protocol: http
+  parameters:
+    url: https://www.google.com/
+    method: POST
+  expected_result:
+    status_code: 200
