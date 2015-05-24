@@ -51,7 +51,9 @@ RUN         pip install Twisted==11.1.0 && \
                 pip install gunicorn==19.1.1
 
 # Install Fource
-RUN         pip install fource
+RUN         pip install fource && \
+                touch /var/log/fource.log && \
+                chmod 777 /var/log/fource.log
 
 # Install and configure thruk
 RUN         gpg --keyserver keys.gnupg.net --recv-keys F8C1CA08A57B9ED7 && \

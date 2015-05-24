@@ -1,0 +1,9 @@
+define service {
+    service_description        {{ service }}
+    use                        generic-service
+    host_name                  {{ hostname }}
+    check_command              fource_check!{{ path }}
+    check_interval             5
+    retry_interval             5
+    aggregation                {{ hostname }}
+}
