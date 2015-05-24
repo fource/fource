@@ -34,10 +34,14 @@ config_dict = {}
 for config_file in config_file_list:
     hostname = config_file.split('/')[-2]
     service = '.'.join(config_file.split('/')[-1].split('.')[:-1])
+    if config_file.startswith('./'):
+        path = '/'.join([FOURCE_CONFIG_DIR, config_file[2:]])
+    else:
+        path = '/'.join([FOURCE_CONFIG_DIR, config_file])
     vars_dict = {
         'hostname': hostname,
         'service': service,
-        'path': '/'.join([FOURCE_CONFIG_DIR, config_file]),
+        'path': path,
     }
     host_config = host_template.render(**vars_dict)
     service_config = service_template.render(**vars_dict)
@@ -52,6 +56,7 @@ for config_file in config_file_list:
 with open(GENERATE_FILE, 'w') as f:
     for hostname, config in config_dict.items():
         f.write(config['hostconfig'])
+        f.write('\n\n')
         for service_config in config['services']:
             f.write(service_config)
             f.write('\n\n')
