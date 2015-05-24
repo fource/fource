@@ -44,18 +44,25 @@ class HttpClass(object):
             self.patchRequest()
         return self.result
 
+    def _extract_json_resp(self, resp):
+        try:
+            return resp.json()
+        except:
+            return {}
+
     def getRequest(self):
         if self.req_auth is None:
             resp = requests.get(self.req_url,headers=self.req_headers,params=self.req_data)
         else:
             resp = requests.get(self.req_url,headers=self.req_headers,params=self.req_data,auth=self.req_auth)
+
         self.result = {
             'status_code':resp.status_code,
             'request_headers':resp.request.headers,
             'url':resp.url,
             'response_headers':resp.headers,
             'response': resp.text,
-            'response_json': resp.json(),
+            'response_json': self._extract_json_resp(resp),
         }
 
     def postRequest(self):
@@ -69,7 +76,7 @@ class HttpClass(object):
             'url': resp.url,
             'response_headers': resp.headers,
             'response': resp.text,
-            'response_json': resp.json(),
+            'response_json': self._extract_json_resp(resp),
         }
 
     def validator(self,response,validation_dic):
@@ -113,7 +120,7 @@ class HttpClass(object):
             'url': resp.url,
             'response_headers': resp.headers,
             'response': resp.text,
-            'response_json': resp.json(),
+            'response_json': self._extract_json_resp(resp),
         }
 
     def patchRequest(self):
@@ -129,7 +136,7 @@ class HttpClass(object):
             'url': resp.url,
             'response_headers': resp.headers,
             'response': resp.text,
-            'response_json': resp.json(),
+            'response_json': self._extract_json_resp(resp),
         }
 
     def delRequest(self):
